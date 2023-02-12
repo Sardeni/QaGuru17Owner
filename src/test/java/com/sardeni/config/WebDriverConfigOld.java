@@ -3,7 +3,7 @@ package com.sardeni.config;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
-public class WebDriverConfig {
+public class WebDriverConfigOld {
 
     public String getBaseUrl() {
         // Зачитываем значения из настроек

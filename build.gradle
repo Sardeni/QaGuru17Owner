@@ -26,7 +26,7 @@ dependencies {
         version.set("2.20.1")
         adapter {
             allureJavaVersion.set("2.20.1")
-            aspectjVersion.set("1.9.5")
+            aspectjVersion.set("1.9.19")
             aspectjWeaver.set(true)
 
             frameworks {
@@ -64,6 +64,7 @@ task smoke_tests(type: Test) {
     useJUnitPlatform {
         includeTags("smoke")
     }
+    systemProperties(System.getProperties())
 }
 
 test {
