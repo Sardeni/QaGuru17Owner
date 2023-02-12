@@ -1,5 +1,2 @@
-package com.sardeni.config;
-
-public enum Browser {
-    FIREFOX, CHROME
+package com.sardeni.config;public enum Browser {
 }

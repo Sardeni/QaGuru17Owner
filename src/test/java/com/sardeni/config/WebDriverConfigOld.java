@@ -1,15 +1,18 @@
 package com.sardeni.config;
-import java.net.MalformedURLException;
-import java.util.Objects;
-import java.net.URL;
 
-public class WebDriverConfigOld {
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Objects;
+public class WebDriverConfig {
 
     public String getBaseUrl() {
+        // Зачитываем значения из настроек
         String baseUrl = System.getProperty("baseUrl");
+        // проверяем дефолтные значения
         if (Objects.isNull(baseUrl)) {
             baseUrl = "https://github.com";
         }
+        // Возвращаем результат
         return baseUrl;
     }
 
@@ -21,7 +24,7 @@ public class WebDriverConfigOld {
         return Browser.valueOf(browser);
     }
 
-    public URL gerRemoteURL() {
+    public URL getRemoteURL() {
         String remoteUrl = System.getProperty("remoteUrl");
         if (Objects.isNull(remoteUrl)) {
             remoteUrl = "http://localhost:4444";
@@ -29,7 +32,9 @@ public class WebDriverConfigOld {
         try {
             return new URL(remoteUrl);
         } catch (MalformedURLException e) {
-            throw new RuntimeException();
+         throw new RuntimeException(e);
         }
     }
+
+
 }
