@@ -1,42 +1,26 @@
 package com.sardeni.config;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import com.codeborne.selenide.Configuration;
 import org.aeonbits.owner.ConfigFactory;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+public class WebDriverProvider {
 
-import java.util.function.Supplier;
+    static WebDriverConfig config = ConfigFactory.create(WebDriverConfig.class, System.getProperties());
 
-public class WebDriverProvider implements Supplier<WebDriver> {
-
-    private final WebDriverConfig config;
-
-    public WebDriverProvider() {
-        this.config = ConfigFactory.create(WebDriverConfig.class, System.getProperties());
-    }
-
-    @Override
-    public WebDriver get() {
-        WebDriver driver = createDriver();
-        driver.get(config.getBaseUrl());
-        return driver;
-    }
-
-    public WebDriver createDriver() {
-
-        switch (config.getBrowser()) {
-            case CHROME: {
-                WebDriverManager.chromedriver().setup();
-                return new ChromeDriver();
-            }
-            case FIREFOX: {
-                WebDriverManager.firefoxdriver().setup();
-                return new FirefoxDriver();
-            }
-            default: {
-                throw new RuntimeException("No such driver");
-            }
+    public static void config() {
+        Configuration.baseUrl = WebDriverProvider.config.getBaseUrl();
+        Configuration.browserSize = WebDriverProvider.config.getBrowserSize();
+        Configuration.browser = WebDriverProvider.config.getBrowserName();
+        Configuration.browserVersion = WebDriverProvider.config.getBrowserVersion();
+        Configuration.pageLoadStrategy = WebDriverProvider.config.getPageLoadStrategy();
+        String remoteUrl = WebDriverProvider.config.getRemoteUrl();
+        if (remoteUrl != null) {
+            Configuration.remote = remoteUrl;
         }
+
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("enableVNC", true);
+        capabilities.setCapability("enableVideo", true);
+        Configuration.browserCapabilities = capabilities;
     }
 }

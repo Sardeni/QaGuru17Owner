@@ -2,22 +2,27 @@ package com.sardeni.config;
 
 import org.aeonbits.owner.Config;
 
-import java.net.URL;
+@Config.Sources({"classpath:${env}.properties"})
 
 public interface WebDriverConfig extends Config {
 
+    @Key("browserSize")
+    @DefaultValue("1920x1080")
+    String getBrowserSize();
+
+    @Key("browserName")
+    String getBrowserName();
+
+    @Key("browserVersion")
+    String getBrowserVersion();
+
     @Key("baseUrl")
-    @DefaultValue("https://github.com")
     String getBaseUrl();
 
-    @Key("browser")
-    @DefaultValue("CHROME")
-    Browser getBrowser();
-
     @Key("remoteUrl")
-    @DefaultValue("http://localhost:4444")
-    URL getRemoteURL();
+    String getRemoteUrl();
 
-
-
+    @Key("pageLoadStrategy")
+    @DefaultValue("eager")
+    String getPageLoadStrategy();
 }
